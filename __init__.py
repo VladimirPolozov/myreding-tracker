@@ -13,6 +13,7 @@ from blueprints.books import books_page
 from blueprints.profile import profile_page
 from blueprints.add_book import add_book_page
 from blueprints.book import book_page
+from blueprints.my_book import my_book_page
 
 # Создание приложения
 app = Flask(__name__)
@@ -32,6 +33,7 @@ app.register_blueprint(books_page)
 app.register_blueprint(profile_page)
 app.register_blueprint(add_book_page)
 app.register_blueprint(book_page)
+app.register_blueprint(my_book_page)
 # Ключ для взаимодействия с Google Api Bookss
 KEY = "key=AIzaSyDjcLFRSlro98kWymIkyX21yj8h4FGPFfc"
 # Словарь для восстановления пароля
