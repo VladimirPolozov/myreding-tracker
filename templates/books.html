@@ -1,0 +1,31 @@
+{% extends "header.html" %}
+
+{% block content %}
+    {% if books|length == 0 %}
+        <h5>Похоже ваша полка пуста</h5>
+    {% else %}
+        <h5>Книг на вашей полке: {{ books|length }}</h5>
+    {% endif %}
+    <form action={{url_for('add_book_page.add_book')}}>
+        <button class="btn btn-primary">Добавить</button>
+    </form><br>
+    {% if books %}
+        <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-sm-2 row-cols-1">
+            {% for book in books %}
+                {% set link = '/mybook/' + book['selfLink'] %}
+                <div class="col mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ book["title"] }}</h5>
+                            <img src={{book['image']}} class="card-img-top" style="width: 128px; height: 189px">
+                            <p class="card-text card-group">{{ ', '.join(book["authors"]) }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href={{link}} class="btn btn-primary">Открыть</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,30 @@
+<!DOCTYPE>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <link rel="stylesheet"
+                  href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+                  integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+                  crossorigin="anonymous">
+            <title>Recovery</title>
+        </head>
+        <body>
+            {% if is_password %}
+                <form action="" method="post" novalidate>
+                    <label for="password">Новый пароль</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                    <label for="password2">Повторите пароль</label>
+                    <input type="password" class="form-control" id="password2" name="password2">
+                    <button type="submit" class="btn btn-primary">Сменить</button>
+                    <p>{{ message }}</p>
+                </form>
+            {% else %}
+                <form action="" method="post" novalidate>
+                    <label name="text" for="form">{{ form_text }}</label>
+                    <input type="text" class="form-control" id="form" name="form" aria-describedby={{hint}}>
+                    <button type="submit" class="btn btn-primary">{{ button_text }}</button>
+                    <p>{{ message }}</p>
+                </form>
+            {% endif %}
+        </body>
+    </html>
