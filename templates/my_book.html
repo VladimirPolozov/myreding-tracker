@@ -58,9 +58,10 @@
                 <label for="pages_read">Прочитанных страниц</label>
                 <input type="number" value="1" onKeyUp="if(this.value>{{book['pageCount'] - book['page_read']}}){this.value={{book['pageCount'] - book['page_read']}};}else if(this.value<1){this.value=1;}" id="pages_read" name="pages_read">
                 <button type="submit" class="btn btn-primary btn-lg">Добавить</button>
-                <h5>{{ message }}</h5>
+                <h5>{{ message }}</h5><br>
             </form>
-
+            {% set link = '/delete_book/' + book['id'] %}
+            <a href="{{link}}" class="btn btn-primary btn-lg" role="button">Удалить книгу</a>
             <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>

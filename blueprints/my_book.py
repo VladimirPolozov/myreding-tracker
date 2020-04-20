@@ -21,12 +21,17 @@ def my_book(book_id):
         book_data = session.query(Relationship).filter(
             Relationship.user_id == current_user.id,
             Relationship.book_id == book_id).first()
-        book['id'] = book_id
+        book['id'] = str(book_id)
         book['pageCount'] = book_data.pages
         book['page_read'] = book_data.pages_read
         if book['page_read']:
-            book['time'] =\
-                str(book_data.time // 60) + ':' + str(book_data.time % 60)
+            hours = str(book_data.time // 60)
+            if len(hours) == 1:
+                hours = '0' + hours
+            minute = str(book_data.time % 60)
+            if len(minute) == 1:
+                minute += '0' + minute
+            book['time'] = hours + ':' + minute
             book['speed'] = book['page_read'] // (book_data.time / 60)
             book['percent'] = book['page_read'] // (book['pageCount'] / 100)
         else:
@@ -80,7 +85,7 @@ def my_book(book_id):
         relation = session.query(Relationship).filter(
             Relationship.user_id == current_user.id,
             Relationship.book_id == book_id).first()
-        relation.pages_read = relation.pages_read + pages_read
+        relation.pages_read = relation.pages_read + int(pages_read)
         relation.time = time + relation.time
         session.commit()
 

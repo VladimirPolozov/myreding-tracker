@@ -58,10 +58,12 @@ def book(selfLink):
     elif request.method == 'POST':
         session = db_session.create_session()
 
-        book = Book()
-        book.link = selfLink
-        session.add(book)
-        session.commit()
+        book = session.query(Book).filter(Book.link == selfLink).first()
+        if not book:
+            book = Book()
+            book.link = selfLink
+            session.add(book)
+            session.commit()
 
         relation = Relationship()
         relation.user_id = current_user.id
