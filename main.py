@@ -15,6 +15,7 @@ from blueprints.books import books
 from blueprints.profile import profile
 from blueprints.add_book import add_book
 from blueprints.book import book
+from blueprints.delete_book import delete_book
 
 
 if __name__ == '__main__':

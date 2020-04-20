@@ -22,9 +22,11 @@ def books():
         Relationship.user_id == current_user.id).all()
     books = []
     for item in user_books:
-        book = session.query(Book).filter(Book.id == item.id).first()
-        item = requests.get(book.link).json()
+        book_data = session.query(Book).filter(Book.id == item.id).first()
+        item = requests.get(book_data.link).json()
+
         book = {}
+        book['id'] = str(book_data.id)
         book['selfLink'] = item['selfLink']
         try:
             book['title'] = item['volumeInfo']['title']

@@ -10,18 +10,18 @@ my_book_page = flask.Blueprint('my_book_page', __name__,
                                template_folder='templates')
 
 
-@my_book_page.route('/mybook/<path:selfLink>', methods=['POST', 'GET'])
-def my_book(selfLink):
+@my_book_page.route('/mybook/<int:book_id>', methods=['POST', 'GET'])
+def my_book(book_id):
     if not current_user.is_authenticated:  # если пользователь не авторизован
         return redirect(url_for('unauthorized_form.unauthorized'))
     elif request.method == "GET":
         book = {}
 
         session = db_session.create_session()
-        book_data = session.query(Book).filter(Book.link == selfLink).first()
         book_data = session.query(Relationship).filter(
-            Relationship.book_id == book_data.id,
-            Relationship.user_id == current_user.id).first()
+            Relationship.user_id == current_user.id,
+            Relationship.book_id == book_id).first()
+        book['id'] = book_id
         book['pageCount'] = book_data.pages
         book['page_read'] = book_data.pages_read
         if book['page_read']:
@@ -33,8 +33,9 @@ def my_book(selfLink):
             book['time'] = "00:00"
             book['speed'] = 0
             book['percent'] = 0
-        response = requests.get(selfLink)
-        response = response.json()
+
+        book_data = session.query(Book).filter(Book.id == book_id).first()
+        response = requests.get(book_data.link).json()
 
         try:
             book['title'] = response['volumeInfo']['title']
@@ -76,14 +77,12 @@ def my_book(selfLink):
         time = int(time[0] * 60) + int(time[1])
 
         session = db_session.create_session()
-        book = session.query(Book).filter(Book.link == selfLink).first()
         relation = session.query(Relationship).filter(
             Relationship.user_id == current_user.id,
-            Relationship.book_id == book.id).first()
-        relation.pages_read = pages_read
-        time += relation.time
-        relation.time = time
+            Relationship.book_id == book_id).first()
+        relation.pages_read = relation.pages_read + pages_read
+        relation.time = time + relation.time
         session.commit()
 
         return "<h1>Активность добавлена</h1><br>" + "<a href=\'/mybook/" + \
-               selfLink + "\'>OK</a>"
+               str(book_id) + "\'>OK</a>"
