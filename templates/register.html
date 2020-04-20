@@ -10,45 +10,45 @@
         </head>
         <body>
             <h1>Регистрация</h1>
-                <form action="" method="post">
-                    {{ form.hidden_tag() }}
-                    <p>
-                        {{ form.username.label }}<br>
-                        {{ form.username(class="form-control") }}<br>
-                        {% for error in form.username.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </p>
-                    <p>
-                        {{ form.password.label }}<br>
-                        {{ form.password(class="form-control", type="password") }}<br>
-                        {% for error in form.password.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </p>
-                    <p>
-                        {{ form.password2.label }}<br>
-                        {{ form.password2(class="form-control", type="password") }}<br>
-                        {% for error in form.password2.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </p>
-                    <p>
-                        {{ form.question.label }}<br>
-                        {{ form.question(class="form-control", type="text") }}<br>
-                        {% for error in form.question.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </p>
-                    <p>
-                        {{ form.answer.label }}<br>
-                        {{ form.answer(class="form-control", type="text") }}<br>
-                        {% for error in form.answer.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </p>
-                    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
-                    <a href={{url_for('login_form.login')}}>У меня уже есть свой профиль</a>
-                </form>
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.username.label }}<br>
+                    {{ form.username(class="form-control") }}<br>
+                    {% for error in form.username.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.password.label }}<br>
+                    {{ form.password(class="form-control", type="password") }}<br>
+                    {% for error in form.password.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.password2.label }}<br>
+                    {{ form.password2(class="form-control", type="password") }}<br>
+                    {% for error in form.password2.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.question.label }}<br>
+                    {{ form.question(class="form-control", type="text") }}<br>
+                    {% for error in form.question.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.answer.label }}<br>
+                    {{ form.answer(class="form-control", type="text") }}<br>
+                    {% for error in form.answer.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+                <a href={{url_for('login_form.login')}}>У меня уже есть свой профиль</a>
+            </form>
         </body>
     </html>
