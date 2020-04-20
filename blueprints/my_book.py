@@ -23,6 +23,16 @@ def my_book(selfLink):
             Relationship.book_id == book_data.id,
             Relationship.user_id == current_user.id).first()
         book['pageCount'] = book_data.pages
+        book['page_read'] = book_data.pages_read
+        if book['page_read']:
+            book['time'] =\
+                str(book_data.time // 60) + ':' + str(book_data.time % 60)
+            book['speed'] = book['page_read'] // (book_data.time / 60)
+            book['percent'] = book['page_read'] // (book['pageCount'] / 100)
+        else:
+            book['time'] = "00:00"
+            book['speed'] = 0
+            book['percent'] = 0
         response = requests.get(selfLink)
         response = response.json()
 
@@ -75,5 +85,5 @@ def my_book(selfLink):
         relation.time = time
         session.commit()
 
-        return "<h1>Активность добавлена</h1><br>" + "<a href=\'/mybook/" +\
-               selfLink + "\'>Ок</a>"
+        return "<h1>Активность добавлена</h1><br>" + "<a href=\'/mybook/" + \
+               selfLink + "\'>OK</a>"

@@ -28,17 +28,39 @@
                 <p>Читать онлайн (отрывок)</p>
                 <a class="btn btn-primary btn-lg" href={{book["webReaderLink"]}} role="button">читать</a><br>
             </div>
+            <div class="">
+                <h2 class="display-4">Как вы читали:</h2>
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action" style="pointer-events: none; width: 25%">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="display-4">{{ book['page_read'] }}</h4><p class="lead">стр</p>
+                        </div>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action" style="pointer-events: none; width: 25%">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="display-4">{{ book['time'] }}</h4><p class="lead">время</p>
+                        </div>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action" style="pointer-events: none; width: 25%">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="display-4">{{ book['speed'] }}</h4><p class="lead">стр/ч</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="progress" style="width: 25%">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{book['percent']}}%" aria-valuenow="{{book['percent']}}" aria-valuemin="0" aria-valuemax="100">{{ book['percent'] }}</div>
+                </div>
+            </div>
             <form action="" method="post" novalidate>
                 <h5>Добавить активность</h5>
-                <label for="time">Прочитанных страниц</label>
-                <input id="time" type="time" name="time" min="00:01" max="23:59" value="00:01">
+                <label for="time">Время за чтением</label>
+                <input id="time" type="time" name="time" min="00:01" max="23:59" value="00:01" required>
                 <label for="pages_read">Прочитанных страниц</label>
-                <input id="pages_read" type="number" name="pages_read" min="1" max="{{book['pageCount']}}" value="1">
+                <input type="number" value="0" onKeyUp="if(this.value>{{book['pageCount'] - book['page_read']}}){this.value={{book['pageCount'] - book['page_read']}};}else if(this.value<1){this.value=1;}" id="pages_read" name="pages_read">
                 <button type="submit" class="btn btn-primary btn-lg">Добавить</button>
                 <h5>{{ message }}</h5>
             </form>
-            <a class="btn btn-primary" href="{{url_for('delete_book_page.delete_book')}}" role="button">Удалить</a>
-            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+            <script ssrc="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
         </body>
