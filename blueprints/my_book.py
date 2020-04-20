@@ -3,7 +3,6 @@ import requests
 from flask import url_for, request, render_template
 from flask_login import current_user
 from werkzeug.utils import redirect
-
 from data import db_session
 from data.tables import Book, Relationship
 
@@ -62,4 +61,19 @@ def my_book(selfLink):
         return render_template('my_book.html', book=book)
 
     elif request.method == "POST":
-        pass
+        pages_read = request.form.get('pages_read')
+        time = request.form.get('time').split(':')
+        time = int(time[0] * 60) + int(time[1])
+
+        session = db_session.create_session()
+        book = session.query(Book).filter(Book.link == selfLink).first()
+        relation = session.query(Relationship).filter(
+            Relationship.user_id == current_user.id,
+            Relationship.book_id == book.id).first()
+        relation.pages_read = pages_read
+        time += relation.time
+        relation.time = time
+        session.commit()
+
+        return "<h1>Активность добавлена</h1><br>" + "<a href=\'/mybook/" +\
+               selfLink + "\'>Ок</a>"

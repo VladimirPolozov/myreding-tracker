@@ -66,11 +66,10 @@ class Relationship(SqlAlchemyBase):
                               nullable=True)
     # кол-во прочитанных страниц книги
     pages_read = sqlalchemy.Column(sqlalchemy.Integer,
-                                   nullable=True,
                                    default=0)
     # кол-во сумморного времени затраченного на чтение
-    time = sqlalchemy.Column(sqlalchemy.Time,
-                             nullable=True)
+    time = sqlalchemy.Column(sqlalchemy.Integer,
+                             default=0)
 
     user = orm.relation('User')
     book = orm.relation('Book')
