@@ -14,8 +14,8 @@ registration_form = flask.Blueprint('registration_form', __name__,
 
 class RegistrationForm(FlaskForm):
     username = StringField('Имя пользователя', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    password2 = PasswordField('Repeat Password',
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    password2 = PasswordField('Повторите пароль',
                               validators=[DataRequired(), EqualTo('password')])
     question = StringField(
         'Секретный вопрос (например: \"Любимая музыкальная группа?\")',
@@ -23,7 +23,7 @@ class RegistrationForm(FlaskForm):
     answer = StringField(
         'Ответ на секретный вопрос (например: \"for KING & COUNTRY\")',
         validators=[DataRequired()])
-    submit = SubmitField('Register')
+    submit = SubmitField('Зарегистрироваться')
 
     def validate_username(self, username):
         session = db_session.create_session()
