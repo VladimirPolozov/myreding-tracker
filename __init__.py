@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_login import LoginManager
 # Импорт чертежей
+from flask_moment import Moment
+
 from blueprints.delete_profile import delete_profile
 from blueprints.logout import blue_logout
 from blueprints.register import registration_form
@@ -21,6 +23,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'p996O41lOv31O'
 login_manager = LoginManager()
 login_manager.init_app(app)
+# Библеотека для работы со временем
+moment = Moment(app)
 # регистрация чертежей
 app.register_blueprint(delete_profile)
 app.register_blueprint(blue_logout)

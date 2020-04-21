@@ -1,4 +1,6 @@
+from datetime import datetime
 import flask
+import pytz
 import requests
 from flask import url_for, request, render_template
 from flask_login import current_user
@@ -87,6 +89,7 @@ def my_book(book_id):
             Relationship.book_id == book_id).first()
         relation.pages_read = relation.pages_read + int(pages_read)
         relation.time = time + relation.time
+        relation.last_activity = datetime.now(pytz.timezone('Europe/Moscow'))
         session.commit()
 
         return "<h1>Активность добавлена</h1><br>" + "<a href=\'/mybook/" + \

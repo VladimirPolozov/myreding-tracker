@@ -5,6 +5,7 @@ from . import db_session
 from .db_session import SqlAlchemyBase
 from sqlalchemy import orm
 from datetime import datetime
+import pytz
 
 
 class User(SqlAlchemyBase, UserMixin):
@@ -73,7 +74,8 @@ class Relationship(SqlAlchemyBase):
                              default=0)
     # дата последней активности
     last_activity = sqlalchemy.Column(sqlalchemy.Date,
-                                      default=)
+                                      default=datetime.now(
+                                          pytz.timezone('Europe/Moscow')))
 
     user = orm.relation('User')
     book = orm.relation('Book')
