@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from . import db_session
 from .db_session import SqlAlchemyBase
 from sqlalchemy import orm
+from datetime import datetime
 
 
 class User(SqlAlchemyBase, UserMixin):
@@ -12,10 +13,10 @@ class User(SqlAlchemyBase, UserMixin):
 
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True,
-                           autoincrement=True,
-                           index=True)  # Уникальный id пользователя
+                           autoincrement=True)  # Уникальный id пользователя
     name = sqlalchemy.Column(sqlalchemy.String,
-                             unique=True)  # Уникальное имя пользователя
+                             unique=True,
+                             index=True)  # Уникальное имя пользователя
     password = sqlalchemy.Column(sqlalchemy.String)  # хэшированный пароль
     # Секретный пароль, на случай, если пользователь забудет пароль
     question = sqlalchemy.Column(sqlalchemy.String)
@@ -70,6 +71,9 @@ class Relationship(SqlAlchemyBase):
     # кол-во сумморного времени затраченного на чтение
     time = sqlalchemy.Column(sqlalchemy.Integer,
                              default=0)
+    # дата последней активности
+    last_activity = sqlalchemy.Column(sqlalchemy.Date,
+                                      default=)
 
     user = orm.relation('User')
     book = orm.relation('Book')
@@ -81,8 +85,7 @@ class Book(SqlAlchemyBase):
 
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True,
-                           autoincrement=True,
-                           index=True)  # id книги
+                           autoincrement=True)  # id книги
     # ссылка запроса для данной книги, в Google Api Books
     link = sqlalchemy.Column(sqlalchemy.String,
                              index=True)
