@@ -53,29 +53,28 @@ class Relationship(SqlAlchemyBase):
     """Таблица отношений пользователь к книгам"""
     __tablename__ = 'relationship'
 
-    id = sqlalchemy.Column(sqlalchemy.Integer,
-                           primary_key=True,
-                           autoincrement=True)
+    id = sqlalchemy.Column(
+        sqlalchemy.Integer, primary_key=True, autoincrement=True)
     # id пользователя, который добавил книгу с id book_id к себе на полку
-    user_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                sqlalchemy.ForeignKey("users.id"),
-                                index=True)
+    user_id = sqlalchemy.Column(
+        sqlalchemy.Integer, sqlalchemy.ForeignKey("users.id"), index=True)
     # id книги, которую пользователь с id user_id добавил к себе на полку
-    book_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                sqlalchemy.ForeignKey("books.id"))
+    book_id = sqlalchemy.Column(
+        sqlalchemy.Integer, sqlalchemy.ForeignKey("books.id"))
     # кол-во страниц в книге по мнению пользователя
-    pages = sqlalchemy.Column(sqlalchemy.Integer,
-                              nullable=True)
+    pages = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
     # кол-во прочитанных страниц книги
-    pages_read = sqlalchemy.Column(sqlalchemy.Integer,
-                                   default=0)
+    pages_read = sqlalchemy.Column(sqlalchemy.Integer, default=0)
     # кол-во сумморного времени затраченного на чтение
-    time = sqlalchemy.Column(sqlalchemy.Integer,
-                             default=0)
+    time = sqlalchemy.Column(sqlalchemy.Integer, default=0)
     # дата последней активности
-    last_activity = sqlalchemy.Column(sqlalchemy.Date,
-                                      default=datetime.now(
-                                          pytz.timezone('Europe/Moscow')))
+    day_last_activity = sqlalchemy.Column(
+        sqlalchemy.Date, default=datetime.now(pytz.timezone('Europe/Moscow')))
+    # месяц и год последней активности
+    default = (datetime.now(pytz.timezone('Europe/Moscow')))
+    month_last_activity = sqlalchemy.Column(
+        sqlalchemy.String,
+        default=str(default.year) + '-' + str(default.month))
 
     user = orm.relation('User')
     book = orm.relation('Book')
