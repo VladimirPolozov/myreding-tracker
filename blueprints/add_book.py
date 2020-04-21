@@ -27,39 +27,40 @@ def add_book():
         response = requests.get(grequest)
         response = response.json()
         books = []
+        if response['totalItems'] != 0:
+            for item in response['items']:
 
-        for item in response['items']:
+                session = db_session.create_session()
+                book = session.query(Book).filter(
+                    Book.link == item['selfLink']).first()
 
-            session = db_session.create_session()
-            book = session.query(Book).filter(
-                Book.link == item['selfLink']).first()
+                if book and session.query(Relationship).filter(
+                        Relationship.book_id == book.id,
+                        Relationship.user_id == current_user.id).first():
+                    continue
 
-            if book and session.query(Relationship).filter(
-                    Relationship.book_id == book.id,
-                    Relationship.user_id == current_user.id).first():
-                continue
-
-            book = {}
-            book['selfLink'] = item['selfLink']
-            try:
-                book['title'] = item['volumeInfo']['title']
-            except KeyError:
-                book['title'] = "Без названия"
-            try:
-                book['authors'] = item['volumeInfo']['authors']
-            except KeyError:
-                book['authors'] = ["Автор не указан"]
-            try:
-                book['description'] = item['volumeInfo']['description']
-            except KeyError:
-                book['description'] = "Описание отсутствует"
-            try:
-                book['image'] = item['volumeInfo']['imageLinks'][
-                    'thumbnail']
-            except KeyError:
-                book['image'] = 'static/img/nothing.jpg'
-            books.append(book)
-        if not book:
-            book.append(None)
-        return render_template('add_book.html', books=books)
+                book = {}
+                book['selfLink'] = item['selfLink']
+                try:
+                    book['title'] = item['volumeInfo']['title']
+                except KeyError:
+                    book['title'] = "Без названия"
+                try:
+                    book['authors'] = item['volumeInfo']['authors']
+                except KeyError:
+                    book['authors'] = ["Автор не указан"]
+                try:
+                    book['description'] = item['volumeInfo']['description']
+                except KeyError:
+                    book['description'] = "Описание отсутствует"
+                try:
+                    book['image'] = item['volumeInfo']['imageLinks'][
+                        'thumbnail']
+                except KeyError:
+                    book['image'] = 'static/img/nothing.jpg'
+                books.append(book)
+            if not books:
+                books.append(None)
+            return render_template('add_book.html', books=books)
+        return render_template('add_book.html', books=[None])
     return render_template('add_book.html', books=False)

@@ -15,6 +15,7 @@
                 <p class="lead">{{ ", ".join(book["authors"]) }}</p>
                 <hr class="my-4">
                 <p>{{ book["description"] }}</p>
+                <strong>Статус книги: {{ book['status'] }}</strong>
                 {% if book["isAvailableEpub"] or book["isAvailablePdf"] %}
                     <p>Скачать отрывок</p>
                 {% endif %}
@@ -51,15 +52,17 @@
                     <div class="progress-bar bg-success" role="progressbar" style="width: {{book['percent']}}%" aria-valuenow="{{book['percent']}}" aria-valuemin="0" aria-valuemax="100">{{ book['percent'] }}</div>
                 </div>
             </div>
-            <form action="" method="post" novalidate>
-                <h5>Добавить активность</h5>
-                <label for="time">Время за чтением</label>
-                <input id="time" type="time" name="time" min="00:01" max="23:59" value="00:01" required>
-                <label for="pages_read">Прочитанных страниц</label>
-                <input type="number" value="1" onKeyUp="if(this.value>{{book['pageCount'] - book['page_read']}}){this.value={{book['pageCount'] - book['page_read']}};}else if(this.value<1){this.value=1;}" id="pages_read" name="pages_read">
-                <button type="submit" class="btn btn-primary btn-lg">Добавить</button>
-                <h5>{{ message }}</h5><br>
-            </form>
+            {% if book['status'] != 'Прочитал!' %}
+                <form action="" method="post" novalidate>
+                    <h5>Добавить активность</h5>
+                    <label for="time">Время за чтением</label>
+                    <input type="time" value="00:01" min="00:01" max="23:59" onKeyUp="if(this.value>'23:59'){this.value='23:59';}else if(this.value<'00:01'){this.value='00:01';}" id="time" name="time" required>
+                    <label for="pages_read">Прочитанных страниц</label>
+                    <input type="number" value="1" min="1" max="{{book['pageCount'] - book['page_read']}}" onKeyUp="if(this.value>{{book['pageCount'] - book['page_read']}}){this.value={{book['pageCount'] - book['page_read']}};}else if(this.value<1){this.value=1;}" id="pages_read" name="pages_read" required>
+                    <button type="submit" class="btn btn-primary btn-lg">Добавить</button>
+                    <h5>{{ message }}</h5><br>
+                </form>
+            {% endif %}
             {% set link = '/delete_book/' + book['id'] %}
             <a href="{{link}}" class="btn btn-primary btn-lg" role="button">Удалить книгу</a>
             <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

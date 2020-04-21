@@ -38,6 +38,7 @@ class User(SqlAlchemyBase, UserMixin):
         user = session.query(User).filter(User.name == username).first()
         # Проверка, совпадает ли введёный пользователем пароль
         # с рахэшированным паролем из БД
+        print(user.password)
         return check_password_hash(user.password, password)
 
     def check_answer(self, answer, username):

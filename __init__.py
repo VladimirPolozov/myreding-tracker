@@ -42,5 +42,3 @@ app.register_blueprint(my_book_page)
 app.register_blueprint(delete_book_page)
 # Ключ для взаимодействия с Google Api Bookss
 KEY = "key=AIzaSyDjcLFRSlro98kWymIkyX21yj8h4FGPFfc"
-# Словарь для восстановления пароля
-DATA = {'index_recovery': 0}

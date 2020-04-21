@@ -6,6 +6,8 @@ from data.tables import User
 
 recovery_form = flask.Blueprint('recovery_form', __name__,
                                 template_folder='templates')
+# Словарь для восстановления пароля
+DATA = {'index_recovery': 0}
 
 
 @recovery_form.route('/recovery', methods=['POST', 'GET'])
@@ -22,11 +24,10 @@ def recovery():
             session = db_session.create_session()
             user = session.query(User).filter(User.name == name).first()
             if not user:
-                return render_template('recovery.html',
-                                       form_text="Введите имя пользователя",
-                                       hint="Имя",
-                                       button_text="Дальше",
-                                       message="Такое имя пользователя не найдено")
+                return render_template(
+                    'recovery.html', form_text="Введите имя пользователя",
+                    hint="Имя", button_text="Дальше",
+                    message="Такое имя пользователя не найдено")
             DATA['index_recovery'] = 1
             DATA['user'] = user
             return render_template('recovery.html',
@@ -35,10 +36,9 @@ def recovery():
                                    button_text="Ответить")
         elif DATA['index_recovery'] == 1:
             answer = request.form.get('form').strip()
-            user = DATA['user']
-            if not user.check_answer(answer, user.name):
+            if not DATA['user'].check_answer(answer, DATA['user'].name):
                 return render_template('recovery.html',
-                                       form_text=user.question,
+                                       form_text=DATA['user'].question,
                                        hint="Ответ",
                                        button_text="Ответить",
                                        message="Неверный ответ")
@@ -52,10 +52,9 @@ def recovery():
                 return render_template('recovery.html',
                                        is_password=False,
                                        message="Пароли не совпадают")
-            user = DATA['user']
             session = db_session.create_session()
-            user.password = user.set_password(password)
+            DATA['user'].password = DATA['user'].set_password(password)
             session.commit()
             DATA['index_recovery'] = 0
-            del DATA['user']
+            DATA['user'] = 0
             return redirect(url_for('login_form.login'))

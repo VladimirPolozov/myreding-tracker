@@ -22,7 +22,7 @@ def books():
         Relationship.user_id == current_user.id).all()
     books = []
     for item in user_books:
-        book_data = session.query(Book).filter(Book.id == item.id).first()
+        book_data = session.query(Book).filter(Book.id == item.book_id).first()
         item = requests.get(book_data.link).json()
 
         book = {}

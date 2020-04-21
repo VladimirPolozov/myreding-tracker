@@ -26,20 +26,28 @@ def my_book(book_id):
         book['id'] = str(book_id)
         book['pageCount'] = book_data.pages
         book['page_read'] = book_data.pages_read
-        if book['page_read']:
+        try:
             hours = str(book_data.time // 60)
             if len(hours) == 1:
                 hours = '0' + hours
             minute = str(book_data.time % 60)
             if len(minute) == 1:
-                minute += '0' + minute
+                minute = '0' + minute
             book['time'] = hours + ':' + minute
             book['speed'] = book['page_read'] // (book_data.time / 60)
             book['percent'] = book['page_read'] // (book['pageCount'] / 100)
-        else:
+        except Exception:
+            book['page_read'] = 0
             book['time'] = "00:00"
             book['speed'] = 0
             book['percent'] = 0
+
+        if book['percent'] == 100:
+            book['status'] = 'Прочитал!'
+        elif book['page_read'] > 0:
+            book['status'] = 'Читаю'
+        else:
+            book['status'] = 'Хочу прочитать'
 
         book_data = session.query(Book).filter(Book.id == book_id).first()
         response = requests.get(book_data.link).json()
@@ -79,6 +87,10 @@ def my_book(book_id):
         return render_template('my_book.html', book=book)
 
     elif request.method == "POST":
+        if request.form.get('time') == '00:00':
+            return "<h1>Значение '00:00' у подя 'время' - недопустимо</h><br>" +\
+                   "<a href=\'/mybook/" + str(book_id) + "\'>OK</a>"
+
         pages_read = request.form.get('pages_read')
         time = request.form.get('time').split(':')
         time = int(time[0] * 60) + int(time[1])
@@ -92,5 +104,5 @@ def my_book(book_id):
         relation.last_activity = datetime.now(pytz.timezone('Europe/Moscow'))
         session.commit()
 
-        return "<h1>Активность добавлена</h1><br>" + "<a href=\'/mybook/" + \
-               str(book_id) + "\'>OK</a>"
+        return "<h1>Активность добавлена</h1><br>" +\
+               "<a href=\'/mybook/" + str(book_id) + "\'>OK</a>"
