@@ -23,6 +23,12 @@ class User(SqlAlchemyBase, UserMixin):
     question = sqlalchemy.Column(sqlalchemy.String)
     # Ответ на секретный вопрос
     answer = sqlalchemy.Column(sqlalchemy.String)
+    # Прочитанные страницы (за всё время)
+    pages_read = sqlalchemy.Column(sqlalchemy.Integer,
+                                   default=0)
+    # Время за чтением (за всё время)
+    time = sqlalchemy.Column(sqlalchemy.String,
+                             default=0)
 
     # Это позваолит получить все книги пользователя
     relationship = orm.relation("Relationship", back_populates='user')
