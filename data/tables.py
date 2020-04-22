@@ -1,5 +1,6 @@
 import sqlalchemy
 from flask_login import UserMixin
+from sqlalchemy_serializer import SerializerMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db_session
 from .db_session import SqlAlchemyBase
@@ -66,14 +67,10 @@ class Relationship(SqlAlchemyBase):
     pages_read = sqlalchemy.Column(sqlalchemy.Integer, default=0)
     # кол-во сумморного времени затраченного на чтение
     time = sqlalchemy.Column(sqlalchemy.Integer, default=0)
-    # дата последней активности
-    day_last_activity = sqlalchemy.Column(
-        sqlalchemy.Date, default=datetime.now())
     # месяц и год последней активности
-    default = datetime.now()
-    month_last_activity = sqlalchemy.Column(
+    last_activity = sqlalchemy.Column(
         sqlalchemy.String,
-        default=str(default.year) + '-' + str(default.month))
+        default=str(datetime.now().year) + '-' + str(datetime.now().month))
 
     user = orm.relation('User')
     book = orm.relation('Book')
@@ -91,7 +88,7 @@ class Book(SqlAlchemyBase):
                              index=True)
 
 
-class Statics(SqlAlchemyBase):
+class Statics(SqlAlchemyBase, SerializerMixin):
     """Таблица со статистикой пользователя по месяцам"""
     __tablename__ = 'statics'
 

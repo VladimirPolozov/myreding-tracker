@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_login import LoginManager
 # Импорт чертежей
-from flask_moment import Moment
+from flask_restful import Api
 
 from blueprints.delete_profile import delete_profile
 from blueprints.logout import blue_logout
@@ -17,14 +17,15 @@ from blueprints.add_book import add_book_page
 from blueprints.book import book_page
 from blueprints.my_book import my_book_page
 from blueprints.delete_book import delete_book_page
+from blueprints.get_statics import get_statics_blue
 
 # Создание приложения
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'p996O41lOv31O'
+# Api нашего приложения
+api = Api(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
-# Библеотека для работы со временем
-moment = Moment(app)
 # регистрация чертежей
 app.register_blueprint(delete_profile)
 app.register_blueprint(blue_logout)
@@ -40,5 +41,6 @@ app.register_blueprint(add_book_page)
 app.register_blueprint(book_page)
 app.register_blueprint(my_book_page)
 app.register_blueprint(delete_book_page)
-# Ключ для взаимодействия с Google Api Bookss
+app.register_blueprint(get_statics_blue)
+# Ключ для взаимодействия с Google Api Books
 KEY = "key=AIzaSyDjcLFRSlro98kWymIkyX21yj8h4FGPFfc"

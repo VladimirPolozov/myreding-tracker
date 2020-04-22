@@ -54,80 +54,80 @@ def statics(view):
         values.append(int(static.november.split()[1]))
         values.append(int(static.december.split()[1]))
     elif view == 'speed':
-        legend = 'Скорость стр/мин'
+        legend = 'Скорость стр/ч'
         session = db_session.create_session()
         static = session.query(Statics).filter(
             Statics.user_id == current_user.id).one()
         try:
             values.append(
-                round(int(static.january.split()[0]) / int(
-                    static.january.split()[1]), 1))
+                int(static.january.split()[0]) // (int(
+                    static.january.split()[1]) / 60))
         except ZeroDivisionError:
             values.append(0)
         try:
             values.append(
-                round(int(static.february.split()[0]) / int(
-                    static.february.split()[1]), 1))
+                int(static.february.split()[0]) // (int(
+                    static.february.split()[1]) / 60))
         except ZeroDivisionError:
             values.append(0)
         try:
             values.append(
-                round(int(static.march.split()[0]) / int(
-                    static.march.split()[1]), 1))
+                int(static.march.split()[0]) // (int(
+                    static.march.split()[1]) / 60))
         except ZeroDivisionError:
             values.append(0)
         try:
             values.append(
-                round(int(static.april.split()[0]) / int(
-                    static.april.split()[1]), 1))
+                int(static.april.split()[0]) // (int(
+                    static.april.split()[1]) / 60))
         except ZeroDivisionError:
             values.append(0)
         try:
             values.append(
-                round(int(static.may.split()[0]) / int(
-                    static.may.split()[1]), 1))
+                int(static.may.split()[0]) // (int(
+                    static.may.split()[1]) / 60))
         except ZeroDivisionError:
             values.append(0)
         try:
             values.append(
-                round(int(static.june.split()[0]) / int(
-                    static.june.split()[1]), 1))
+                int(static.june.split()[0]) // (int(
+                    static.june.split()[1]) / 60))
         except ZeroDivisionError:
             values.append(0)
         try:
             values.append(
-                round(int(static.july.split()[0]) / int(
-                    static.july.split()[1]), 1))
+                int(static.july.split()[0]) // (int(
+                    static.july.split()[1]) / 60))
         except ZeroDivisionError:
             values.append(0)
         try:
             values.append(
-                round(int(static.august.split()[0]) / int(
-                    static.august.split()[1]), 1))
+                int(static.august.split()[0]) // (int(
+                    static.august.split()[1]) / 60))
         except ZeroDivisionError:
             values.append(0)
         try:
             values.append(
-                round(int(static.september.split()[0]) / int(
-                    static.september.split()[1]), 1))
+                int(static.september.split()[0]) // (int(
+                    static.september.split()[1]) / 60))
         except ZeroDivisionError:
             values.append(0)
         try:
             values.append(
-                round(int(static.october.split()[0]) / int(
-                    static.october.split()[1]), 1))
+                int(static.october.split()[0]) // (int(
+                    static.october.split()[1]) / 60))
         except ZeroDivisionError:
             values.append(0)
         try:
             values.append(
-                round(int(static.november.split()[0]) / int(
-                    static.november.split()[1]), 1))
+                int(static.november.split()[0]) // (int(
+                    static.november.split()[1]) / 60))
         except ZeroDivisionError:
             values.append(0)
         try:
             values.append(
-                round(int(static.december.split()[0]) / int(
-                    static.december.split()[1]), 1))
+                int(static.december.split()[0]) // (int(
+                    static.december.split()[1]) / 60))
         except ZeroDivisionError:
             values.append(0)
     return render_template('static.html',
