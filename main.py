@@ -19,7 +19,7 @@ from blueprints.profile import profile
 from blueprints.add_book import add_book
 from blueprints.book import book
 from blueprints.delete_book import delete_book
-from blueprints.get_statics import get_statics
+from blueprints.api import get_statics
 
 if __name__ == '__main__':
     # Создание БД

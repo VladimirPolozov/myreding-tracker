@@ -3,8 +3,8 @@ from flask_restful import abort
 from data import db_session
 from data.tables import Statics
 
-get_statics_blue = flask.Blueprint('get_statics_blue', __name__,
-                                   template_folder='templates')
+api = flask.Blueprint('get_statics_blue', __name__,
+                      template_folder='templates')
 
 
 @get_statics_blue.route('/api/<string:interval>')
@@ -66,4 +66,4 @@ def get_statics(interval):
         speed = 0
 
     return {'peopleCount': len(statics), 'data':
-            [{'pages': pages, 'time': time, 'speed': speed}]}
+        [{'pages': pages, 'time': time, 'speed': speed}]}
