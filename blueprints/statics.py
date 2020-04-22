@@ -7,7 +7,7 @@ statics_page = flask.Blueprint('statics_page', __name__,
                                template_folder='templates')
 
 
-@statics_page.route('/statics')
+@statics_page.route('/statics/')
 def statics():
     if not current_user.is_authenticated:  # если пользователь не авторизован
         return redirect(url_for('unauthorized_form.unauthorized'))

@@ -6,7 +6,7 @@ from werkzeug.utils import redirect
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, EqualTo, ValidationError
 from data import db_session
-from data.tables import User
+from data.tables import User, Statics
 
 registration_form = flask.Blueprint('registration_form', __name__,
                                     template_folder='templates')
@@ -48,6 +48,11 @@ def register():
         user.answer = user.set_password(form.answer.data)
         user.password = user.set_password(form.password.data)
         session.add(user)
+        session.commit()
+
+        statics = Statics()
+        statics.user_id = user.id
+        session.add(statics)
         session.commit()
 
         return redirect(url_for('login_form.login'))

@@ -1,12 +1,11 @@
 from datetime import datetime
 import flask
-import pytz
 import requests
 from flask import url_for, request, render_template
 from flask_login import current_user
 from werkzeug.utils import redirect
 from data import db_session
-from data.tables import Book, Relationship
+from data.tables import Book, Relationship, Statics
 
 my_book_page = flask.Blueprint('my_book_page', __name__,
                                template_folder='templates')
@@ -102,6 +101,58 @@ def my_book(book_id):
         relation.pages_read = relation.pages_read + int(pages_read)
         relation.time = time + relation.time
         relation.last_activity = datetime.now(pytz.timezone('Europe/Moscow'))
+        session.commit()
+
+        sctatic = session.query(Statics).filter(
+            Statics.user_id == current_user.id).first()
+        if datetime.now().month == 1:
+            sctatic.january =\
+                str(int(sctatic.january.split()[0]) + int(pages_read)) +\
+                ' ' + str(int(sctatic.january.split()[1]) + time)
+        elif datetime.now().month == 2:
+            sctatic.february =\
+                str(int(sctatic.february.split()[0]) + int(pages_read)) + ' '\
+                + str(int(sctatic.february.split()[1]) + time)
+        elif datetime.now().month == 3:
+            sctatic.march =\
+                str(int(sctatic.march.split()[0]) + int(pages_read)) +\
+                ' ' + str(int(sctatic.march.split()[1]) + time)
+        elif datetime.now().month == 4:
+            sctatic.april =\
+                str(int(sctatic.april.split()[0]) + int(pages_read)) +\
+                ' ' + str(int(sctatic.april.split()[1]) + time)
+        elif datetime.now().month == 5:
+            sctatic.may =\
+                str(int(sctatic.may.split()[0]) + int(pages_read)) +\
+                ' ' + str(int(sctatic.may.split()[1]) + time)
+        elif datetime.now().month == 6:
+            sctatic.june =\
+                str(int(sctatic.june.split()[0]) + int(pages_read)) +\
+                ' ' + str(int(sctatic.june.split()[1]) + time)
+        elif datetime.now().month == 7:
+            sctatic.july =\
+                str(int(sctatic.july.split()[0]) + int(pages_read)) +\
+                ' ' + str(int(sctatic.july.split()[1]) + time)
+        elif datetime.now().month == 8:
+            sctatic.august =\
+                str(int(sctatic.august.split()[0]) + int(pages_read)) +\
+                ' ' + str(int(sctatic.august.split()[1]) + time)
+        elif datetime.now().month == 9:
+            sctatic.september =\
+                str(int(sctatic.september.split()[0]) + int(pages_read)) +\
+                ' ' + str(int(sctatic.september.split()[1]) + time)
+        elif datetime.now().month == 10:
+            sctatic.october =\
+                str(int(sctatic.october.split()[0]) + int(pages_read)) +\
+                ' ' + str(int(sctatic.october.split()[1]) + time)
+        elif datetime.now().month == 11:
+            sctatic.november =\
+                str(int(sctatic.november.split()[0]) + int(pages_read)) +\
+                ' ' + str(int(sctatic.november.split()[1]) + time)
+        elif datetime.now().month == 12:
+            sctatic.december =\
+                str(int(sctatic.december.split()[0]) + int(pages_read)) +\
+                ' ' + str(int(sctatic.december.split()[1]) + time)
         session.commit()
 
         return "<h1>Активность добавлена</h1><br>" +\

@@ -5,7 +5,6 @@ from . import db_session
 from .db_session import SqlAlchemyBase
 from sqlalchemy import orm
 from datetime import datetime
-import pytz
 
 
 class User(SqlAlchemyBase, UserMixin):
@@ -23,12 +22,6 @@ class User(SqlAlchemyBase, UserMixin):
     question = sqlalchemy.Column(sqlalchemy.String)
     # Ответ на секретный вопрос
     answer = sqlalchemy.Column(sqlalchemy.String)
-    # Прочитанные страницы (за всё время)
-    pages_read = sqlalchemy.Column(sqlalchemy.Integer,
-                                   default=0)
-    # Время за чтением (за всё время)
-    time = sqlalchemy.Column(sqlalchemy.String,
-                             default=0)
 
     # Это позваолит получить все книги пользователя
     relationship = orm.relation("Relationship", back_populates='user')
@@ -44,7 +37,6 @@ class User(SqlAlchemyBase, UserMixin):
         user = session.query(User).filter(User.name == username).first()
         # Проверка, совпадает ли введёный пользователем пароль
         # с рахэшированным паролем из БД
-        print(user.password)
         return check_password_hash(user.password, password)
 
     def check_answer(self, answer, username):
@@ -76,9 +68,9 @@ class Relationship(SqlAlchemyBase):
     time = sqlalchemy.Column(sqlalchemy.Integer, default=0)
     # дата последней активности
     day_last_activity = sqlalchemy.Column(
-        sqlalchemy.Date, default=datetime.now(pytz.timezone('Europe/Moscow')))
+        sqlalchemy.Date, default=datetime.now())
     # месяц и год последней активности
-    default = (datetime.now(pytz.timezone('Europe/Moscow')))
+    default = datetime.now()
     month_last_activity = sqlalchemy.Column(
         sqlalchemy.String,
         default=str(default.year) + '-' + str(default.month))
@@ -97,3 +89,40 @@ class Book(SqlAlchemyBase):
     # ссылка запроса для данной книги, в Google Api Books
     link = sqlalchemy.Column(sqlalchemy.String,
                              index=True)
+
+
+class Statics(SqlAlchemyBase):
+    """Таблица со статистикой пользователя по месяцам"""
+    __tablename__ = 'statics'
+
+    id = sqlalchemy.Column(sqlalchemy.Integer,
+                           primary_key=True,
+                           autoincrement=True)
+    user_id = sqlalchemy.Column(
+        sqlalchemy.Integer, sqlalchemy.ForeignKey("users.id"), index=True)
+    january = sqlalchemy.Column(sqlalchemy.String,
+                                default='0 0')
+    february = sqlalchemy.Column(sqlalchemy.String,
+                                 default='0 0')
+    march = sqlalchemy.Column(sqlalchemy.String,
+                              default='0 0')
+    april = sqlalchemy.Column(sqlalchemy.String,
+                              default='0 0')
+    may = sqlalchemy.Column(sqlalchemy.String,
+                            default='0 0')
+    june = sqlalchemy.Column(sqlalchemy.String,
+                             default='0 0')
+    july = sqlalchemy.Column(sqlalchemy.String,
+                             default='0 0')
+    august = sqlalchemy.Column(sqlalchemy.String,
+                               default='0 0')
+    september = sqlalchemy.Column(sqlalchemy.String,
+                                  default='0 0')
+    october = sqlalchemy.Column(sqlalchemy.String,
+                                default='0 0')
+    november = sqlalchemy.Column(sqlalchemy.String,
+                                 default='0 0')
+    december = sqlalchemy.Column(sqlalchemy.String,
+                                 default='0 0')
+
+    user = orm.relation('User')
