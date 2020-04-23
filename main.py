@@ -1,11 +1,7 @@
-# импорт приложения
 from flask_login import current_user
-
 from __init__ import *
-
 # для создания сессии
 from data import db_session
-
 # импрот функций-страниц
 from blueprints.delete_profile import delete
 from blueprints.load_user import load_user
