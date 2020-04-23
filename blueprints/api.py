@@ -1,13 +1,12 @@
 import flask
-from flask_restful import abort
 from data import db_session
 from data.tables import Statics
 
-api = flask.Blueprint('get_statics_blue', __name__,
+api_blue = flask.Blueprint('get_statics_blue', __name__,
                       template_folder='templates')
 
 
-@api.route('/api/<string:interval>')
+@api_blue.route('/api/<string:interval>')
 def get_statics(interval):
     if interval != 'all' and \
             int(interval) not in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]:
