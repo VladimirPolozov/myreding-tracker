@@ -9,7 +9,6 @@ from blueprints.register import registration_form
 from blueprints.login import login_form
 from blueprints.unauthorized import unauthorized_form
 from blueprints.recovery import recovery_form
-from blueprints.main_page import main_page
 from blueprints.statics import statics_page
 from blueprints.books import books_page
 from blueprints.profile import profile_page

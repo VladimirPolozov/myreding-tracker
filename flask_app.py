@@ -10,7 +10,6 @@ from blueprints.load_user import load_user
 from blueprints.login import login
 from blueprints.logout import logout
 from blueprints.register import register
-from blueprints.main_page import main
 from blueprints.statics import statics
 from blueprints.books import books
 from blueprints.profile import profile
