@@ -7,6 +7,7 @@ profile_page = flask.Blueprint('profile_page', __name__,
                                template_folder='templates')
 
 
+@profile_page.route('/')
 @profile_page.route('/profile')
 def profile():
     if not current_user.is_authenticated:  # если пользователь не авторизован
