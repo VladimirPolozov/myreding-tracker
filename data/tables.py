@@ -1,6 +1,5 @@
 import sqlalchemy
 from flask_login import UserMixin
-from sqlalchemy_serializer import SerializerMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db_session
 from .db_session import SqlAlchemyBase
@@ -88,7 +87,7 @@ class Book(SqlAlchemyBase):
                              index=True)
 
 
-class Statics(SqlAlchemyBase, SerializerMixin):
+class Statics(SqlAlchemyBase):
     """Таблица со статистикой пользователя по месяцам"""
     __tablename__ = 'statics'
 
