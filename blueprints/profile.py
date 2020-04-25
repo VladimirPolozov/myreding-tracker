@@ -14,6 +14,6 @@ def profile():
         return redirect(url_for('unauthorized_form.unauthorized'))
     title = 'Профиль'
     active = 'profile'
-    username = current_user.is_authenticated
+    username = current_user.name
     return render_template(
         'profile.html', title=title, active=active, username=username)
