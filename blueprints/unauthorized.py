@@ -10,5 +10,5 @@ unauthorized_form = flask.Blueprint('unauthorized_form', __name__,
 @unauthorized_form.route('/unauthorized')
 def unauthorized():
     if current_user.is_authenticated:  # если пользователь авторизован
-        return redirect(url_for('main_page.main'))
+        return redirect(url_for('profile_page.profile'))
     return render_template("unauthorized.html")

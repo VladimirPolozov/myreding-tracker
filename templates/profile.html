@@ -1,7 +1,7 @@
 {% extends "header.html" %}
 
 {% block content %}
-    <h1>Профиль</h1>
+    <h1>Здравствуйте, {{ username }}</h1>
     <a href="{{ url_for('blue_logout.logout') }}" class="btn btn-primary">Выйти</a>
     <a href="{{ url_for('delete_profile.delete') }}" class="btn btn-primary">Удалить профиль</a>
 {% endblock %}

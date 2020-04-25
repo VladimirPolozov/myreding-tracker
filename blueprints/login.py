@@ -22,7 +22,7 @@ class LoginForm(FlaskForm):
 @login_form.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:  # если пользователь авторизован
-        return redirect(url_for('main_page.main'))
+        return redirect(url_for('profile_page.profile'))
     form = LoginForm()
     if form.validate_on_submit():
         session = db_session.create_session()

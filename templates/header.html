@@ -15,11 +15,6 @@
         <header>
             <nav class="navbar navbar-dark bg-dark nav-pills nav-justified">
                 <a class="navbar-brand" href="#">MyReadingTracker</a>
-                {% if active == 'main' %}
-                    <a class="nav-item nav-link active" href="#">Главная</a>
-                {% else %}
-                    <a class="nav-item nav-link" href="{{ url_for('main_page.main') }}">Главная</a>
-                {% endif %}
 
                 {% if active == 'static' %}
                     <a class="nav-item nav-link active" href="#">Статистика</a>
