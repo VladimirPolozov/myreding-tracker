@@ -87,8 +87,9 @@ def my_book(book_id):
 
     elif request.method == "POST":
         if request.form.get('time') == '00:00':
-            return "<h1>Значение '00:00' у подя 'время' - недопустимо</h><br>" + \
-                   "<a href=\'/mybook/" + str(book_id) + "\'>OK</a>"
+            return\
+                "<h1>Значение '00:00' у поля 'время' - недопустимо</h><br>" +\
+                "<a href=\'/mybook/" + str(book_id) + "\'>OK</a>"
 
         pages_read = request.form.get('pages_read')
         time = request.form.get('time').split(':')
