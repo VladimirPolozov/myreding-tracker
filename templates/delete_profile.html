@@ -9,10 +9,10 @@
             <title>Удаление профиля</title>
         </head>
         <body>
-            <form method="post">
-                <label for="password">Введите пароль для подтверждения</label>
+            <form method="post" class="col-xl-3 col-lg-3 col-md-4 col-sm-5 col-7" style="margin-left: 20px;">
+                <label for="password" style="padding-bottom: 5px;">Введите пароль для подтверждения</label>
                 <input type="password" class="form-control" id="password" name="password">
-                <button type="submit" class="btn btn-primary">Подтвердить</button>
+                <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Подтвердить</button>
                 <p>{{ message }}</p>
                 <a href={{url_for('recovery_form.recovery')}}>Забыли пароль?</a>
             </form>
