@@ -9,9 +9,11 @@
             <title>Зарегистрируйтесь</title>
         </head>
         <body>
-            <h1>Упс! Кажется мы вас не знаем.</h1>
-            <p class="h3">Зарегистрируйтесь или войдите</p><br>
-            <a href={{url_for('login_form.login')}} class="btn btn-primary">Войти</a>
-            <a href={{url_for('registration_form.register')}} class="btn btn-primary">Зарегистрироваться</a>
+            <div class="col-xl-5 col-lg-7 col-md-9 col-sm-11 col-11">
+                <h1>Упс! Кажется мы вас не знаем.</h1>
+                <p class="h3">Зарегистрируйтесь или войдите</p><br>
+                <a href={{url_for('login_form.login')}} class="btn btn-primary">Войти</a>
+                <a href={{url_for('registration_form.register')}} class="btn btn-primary">Зарегистрироваться</a>
+            </div>
         </body>
     </html>
