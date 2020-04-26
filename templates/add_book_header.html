@@ -6,19 +6,20 @@
                   href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
                   integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
                   crossorigin="anonymous">
+            <link rel="stylesheet" href="static/css/add_book.css">
             <title>Добавление книги</title>
         </head>
         <body>
             <h1>Добавление книги</h1><br>
-            <p>Вы можете осуществлять поиск по названию, по автору или по тому и другому</p>
-            <form method="post">
+            <p class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10">Вы можете осуществлять поиск по названию, по автору или по тому и другому</p>
+            <form method="post" class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10 bookSearch">
                 <div class="form-group">
                     <label for="title">Название</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="Тайм-менеджмент по помидору" style="width: 25%;">
+                    <input type="text" class="form-control" id="title" name="title" placeholder="Тайм-менеджмент по помидору">
                 </div>
                 <div class="form-group">
                     <label for="author">Автор</label>
-                    <input type="text" class="form-control" id="author" name="author" placeholder="Штаффан Нёттеберг" style="width: 25%;">
+                    <input type="text" class="form-control" id="author" name="author" placeholder="Штаффан Нёттеберг">
                 </div>
                 <button type="submit" class="btn btn-primary">Искать</button>
             </form>
