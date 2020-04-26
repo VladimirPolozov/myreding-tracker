@@ -27,7 +27,7 @@ def add_book():
         response = requests.get(grequest)
         response = response.json()
         books = []
-        if response['totalItems'] != 0:
+        if 'error' not in response and response['totalItems'] != 0:
             for item in response['items']:
 
                 session = db_session.create_session()
