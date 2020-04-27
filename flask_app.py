@@ -19,9 +19,8 @@ from blueprints.delete_book import delete_book
 from blueprints.api import get_statics
 
 
+# Создание БД
+db_session.global_init("db/tracker.sqlite")
 if __name__ == '__main__':
-    # Создание БД
-    db_session.global_init("db/tracker.sqlite")
-
     # Запуск приложения
     app.run(port=8080, host='127.0.0.1')

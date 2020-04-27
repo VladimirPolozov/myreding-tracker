@@ -9,7 +9,7 @@ __factory = None
 
 
 def global_init(db_file):
-    """Супер важдый код для БД"""
+    """Супер важный код для БД"""
     global __factory
 
     if __factory:
