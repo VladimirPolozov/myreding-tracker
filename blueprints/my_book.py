@@ -157,5 +157,5 @@ def my_book(book_id):
                 ' ' + str(int(sctatic.december.split()[1]) + time)
         session.commit()
 
-        return "<h1>Активность добавлена</h1><br>" + \
-               "<a href=\'/mybook/" + str(book_id) + "\'>OK</a>"
+        return redirect(url_for('books_page.books',
+                                message='Активность добавлена'))

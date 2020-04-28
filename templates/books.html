@@ -9,6 +9,7 @@
     <form action={{url_for('add_book_page.add_book')}}>
         <button class="btn btn-primary">Добавить</button>
     </form><br>
+    <p>{{ message }}</p>
     {% if books %}
         <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-sm-2 row-cols-1">
             {% for book in books %}
