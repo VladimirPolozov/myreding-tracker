@@ -51,7 +51,7 @@ def book(selfLink):
         except KeyError:
             book['isAvailablePdf'] = False
         book['selfLink'] = response['selfLink']
-        bok['link'] = response['volumeInfo']['canonicalVolumeLink']
+        book['link'] = response['volumeInfo']['canonicalVolumeLink']
         book['webReaderLink'] = response['accessInfo']['webReaderLink']
 
         return render_template('book.html', book=book)
