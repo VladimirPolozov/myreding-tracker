@@ -10,19 +10,21 @@
         </head>
         <body>
             {% if is_password %}
-                <form action="" method="post" novalidate>
+                <form action="" method="post" novalidate class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10" style="display: block; margin-left: auto; margin-right: auto;">
+                    <h1>Восстановление пароля</h1>
                     <label for="password">Новый пароль</label>
                     <input type="password" class="form-control" id="password" name="password">
                     <label for="password2">Повторите пароль</label>
                     <input type="password" class="form-control" id="password2" name="password2">
-                    <button type="submit" class="btn btn-primary">Сменить</button>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Сменить</button>
                     <p>{{ message }}</p>
                 </form>
             {% else %}
-                <form action="" method="post" novalidate>
+                <form action="" method="post" novalidate class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10" style="display: block; margin-left: auto; margin-right: auto;">
+                    <h1>Восстановление пароля</h1>
                     <label name="text" for="form">{{ form_text }}</label>
                     <input type="text" class="form-control" id="form" name="form" aria-describedby={{hint}}>
-                    <button type="submit" class="btn btn-primary">{{ button_text }}</button>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 15px;">{{ button_text }}</button>
                     <p>{{ message }}</p>
                 </form>
             {% endif %}
