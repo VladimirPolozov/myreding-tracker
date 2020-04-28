@@ -1,56 +1,59 @@
 {% extends "header.html" %}
 
 {% block content %}
-    <h1>Статистика</h1>
-    <div>
-        <a class="btn btn-secondary" href="/statics/pages" role="button">Страницы</a>
-        <a class="btn btn-secondary" href="/statics/time" role="button">Время</a>
-        <a class="btn btn-secondary" href="/statics/speed" role="button">Скорость</a>
+    <div style="padding: 100%; background-color: #66ccff;"></div>
+    <div class="col-xl-6 col-lg-8 col-md-10 col-sm-11" style="background-color: #f2f2f2; position: absolute; top: 50%; left: 50%; margin-right: -50%; transform: translate(-50%, -50%);">
+        <h1 style="padding-bottom: 15px;">Статистика</h1>
+        <div style="padding-bottom: 30px;">
+            <a class="btn btn-secondary" href="/statics/pages" role="button" style="margin-right: 7px;">Страницы</a>
+            <a class="btn btn-secondary" href="/statics/time" role="button" style="margin-right: 7px;">Время</a>
+            <a class="btn btn-secondary" href="/statics/speed" role="button">Скорость</a>
+        </div>
+        <canvas id="myChart" width="600" height="400"></canvas>
+        <script>
+            // Global parameters:
+            // do not resize the chart canvas when its container does (keep at 600x400px)
+            Chart.defaults.global.responsive = false;
+
+            // define the chart data
+            var chartData = {
+                labels : [{% for item in labels %}
+                            "{{item}}",
+                          {% endfor %}],
+                datasets : [{
+                             label: '{{ legend }}',
+                             fill: true,
+                             lineTension: 0.1,
+                             backgroundColor: "rgba(75,192,192,0.4)",
+                             borderColor: "rgba(75,192,192,1)",
+                             borderCapStyle: 'butt',
+                            borderDash: [],
+                            borderDashOffset: 0.0,
+                            borderJoinStyle: 'miter',
+                            pointBorderColor: "rgba(75,192,192,1)",
+                            pointBackgroundColor: "#fff",
+                            pointBorderWidth: 1,
+                            pointHoverRadius: 5,
+                            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                            pointHoverBorderColor: "rgba(220,220,220,1)",
+                            pointHoverBorderWidth: 2,
+                            pointRadius: 1,
+                            pointHitRadius: 10,
+                            data : [{% for item in values %}
+                                         {{item}},
+                                     {% endfor %}],
+                             spanGaps: false
+                            }]
+                            }
+
+            // get chart canvas
+            var ctx = document.getElementById("myChart").getContext("2d");
+
+            // create the chart using the chart canvas
+            var myChart = new Chart(ctx, {
+                                          type: 'line',
+                                          data: chartData,
+                                          });
+        </script>
     </div>
-    <canvas id="myChart" width="600" height="400" class="col-xl-6 col-lg-8 col-md-10 col-sm-11"></canvas>
-    <script>
-        // Global parameters:
-        // do not resize the chart canvas when its container does (keep at 600x400px)
-        Chart.defaults.global.responsive = false;
-
-        // define the chart data
-        var chartData = {
-            labels : [{% for item in labels %}
-                        "{{item}}",
-                      {% endfor %}],
-            datasets : [{
-                         label: '{{ legend }}',
-                         fill: true,
-                         lineTension: 0.1,
-                         backgroundColor: "rgba(75,192,192,0.4)",
-                         borderColor: "rgba(75,192,192,1)",
-                         borderCapStyle: 'butt',
-                         borderDash: [],
-                         borderDashOffset: 0.0,
-                         borderJoinStyle: 'miter',
-                         pointBorderColor: "rgba(75,192,192,1)",
-                         pointBackgroundColor: "#fff",
-                         pointBorderWidth: 1,
-                         pointHoverRadius: 5,
-                         pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                         pointHoverBorderColor: "rgba(220,220,220,1)",
-                         pointHoverBorderWidth: 2,
-                         pointRadius: 1,
-                         pointHitRadius: 10,
-                         data : [{% for item in values %}
-                                     {{item}},
-                                 {% endfor %}],
-                         spanGaps: false
-                        }]
-                        }
-
-        // get chart canvas
-        var ctx = document.getElementById("myChart").getContext("2d");
-
-        // create the chart using the chart canvas
-        var myChart = new Chart(ctx, {
-                                      type: 'line',
-                                      data: chartData,
-                                      });
-    </script>
 {% endblock %}
