@@ -19,7 +19,7 @@
                 {% if active == 'static' %}
                     <a class="nav-item nav-link active" href="#">Статистика</a>
                 {% else %}
-                    <a class="nav-item nav-link" href="statics/pages">Статистика</a>
+                    <a class="nav-item nav-link" href="{{ url_for('statics_page.statics', view='pages') }}">Статистика</a>
                 {% endif %}
 
                 {% if active == 'books' %}

@@ -51,7 +51,7 @@ def book(selfLink):
         except KeyError:
             book['isAvailablePdf'] = False
         book['selfLink'] = response['selfLink']
-        book['link'] = response['volumeInfo']['canonicalVolumeLink']
+        bok['link'] = response['volumeInfo']['canonicalVolumeLink']
         book['webReaderLink'] = response['accessInfo']['webReaderLink']
 
         return render_template('book.html', book=book)
@@ -72,4 +72,4 @@ def book(selfLink):
         session.add(relation)
         session.commit()
 
-        return render_template('book_is_added.html', book=book)
+        return redirect(url_for('books_page.books', message='Книга добавлена'))
