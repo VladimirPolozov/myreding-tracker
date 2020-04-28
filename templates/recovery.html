@@ -10,7 +10,7 @@
         </head>
         <body>
             {% if is_password %}
-                <form action="" method="post" novalidate class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10" style="display: block; margin-left: auto; margin-right: auto;">
+                <form action="" method="post" novalidate class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10" style="position: absolute; top: 50%; left: 50%; margin-right: -50%; transform: translate(-50%, -50%);">
                     <h1>Восстановление пароля</h1>
                     <label for="password">Новый пароль</label>
                     <input type="password" class="form-control" id="password" name="password">
@@ -20,7 +20,7 @@
                     <p>{{ message }}</p>
                 </form>
             {% else %}
-                <form action="" method="post" novalidate class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10" style="display: block; margin-left: auto; margin-right: auto;">
+                <form action="" method="post" novalidate class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10" style="position: absolute; top: 50%; left: 50%; margin-right: -50%; transform: translate(-50%, -50%);">
                     <h1>Восстановление пароля</h1>
                     <label name="text" for="form">{{ form_text }}</label>
                     <input type="text" class="form-control" id="form" name="form" aria-describedby={{hint}}>
