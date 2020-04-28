@@ -29,4 +29,4 @@ def delete_book(book_id):
             Relationship.book_id == book_id).delete()
         session.commit()
         # сообщаем пользователю, что мы удалили его книгу
-        return render_template('book_is_delete.html')
+        return redirect(url_for('books_page.books', message='Книга удалена'))
