@@ -40,6 +40,5 @@ app.register_blueprint(book_page)
 app.register_blueprint(my_book_page)
 app.register_blueprint(delete_book_page)
 app.register_blueprint(api_blue)
-app.register_blueprint(not_found_page)
 # Ключ для взаимодействия с Google Api Books
 KEY = "key=AIzaSyDjcLFRSlro98kWymIkyX21yj8h4FGPFfc"
