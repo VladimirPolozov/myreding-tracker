@@ -3,10 +3,6 @@
 
 {% block content %}
     {% if books %}
-        {% if books[0] == None %}
-            <p>По этому запросу ничего не нашлось</p>
-        {% else %}
-            <p>Результатов: {{ books|length }}</p>
             <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-sm-2 row-cols-1">
                 {% for book in books %}
                     {% set link = '/book/' + book['selfLink'] %}
@@ -24,6 +20,5 @@
                     </div>
                 {% endfor %}
             </div>
-        {% endif %}
     {% endif %}
 {% endblock %}
