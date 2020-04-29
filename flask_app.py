@@ -17,7 +17,6 @@ from blueprints.add_book import add_book
 from blueprints.book import book
 from blueprints.delete_book import delete_book
 from blueprints.api import get_statics
-from blueprints.not_found import not_found
 
 
 # Создание БД
