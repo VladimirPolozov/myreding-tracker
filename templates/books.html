@@ -1,15 +1,13 @@
 {% extends "header.html" %}
 
 {% block content %}
-    <div style="background-color: #f2f2f2; padding: 50px">
+    <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10" style="background-color: #f2f2f2; padding: 25px; margin: 50px; align: left">
         {% if books|length == 0 %}
             <h5>Похоже ваша полка пуста</h5>
         {% else %}
             <h5>Книг на вашей полке: {{ books|length }}</h5>
         {% endif %}
-        <form action={{url_for('add_book_page.add_book')}}>
-            <button class="btn btn-primary">Добавить</button>
-        </form><br>
+        <a class="btn btn-primary" href="{{url_for('add_book_page.add_book')}}" role="button" style="margin-top: 10px;">Добавить</a>
         <p>{{ message }}</p>
     </div>
     {% if books %}

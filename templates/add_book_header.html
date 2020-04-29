@@ -15,10 +15,10 @@
                   }
         </style>
         <body>
-            <div style="background-color: #f2f2f2; padding: 50px; margin-left: auto; margin-right: auto; margin-bottom: 50px;">
+            <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10" style="background-color: #f2f2f2; padding: 50px; margin: 50px; align: left">
                 <h1>Добавление книги</h1>
                 <p style="margin-bottom: 15px;">Вы можете осуществлять поиск по названию, по автору или по тому и другому</p>
-                <form method="post" class="col-xl-4 col-lg-5 col-md-6 col-sm-8 col-10">
+                <form method="post">
                     <div class="form-group">
                         <label for="title">Название</label>
                         <input type="text" class="form-control" id="title" name="title" placeholder="Тайм-менеджмент по помидору">
@@ -27,10 +27,13 @@
                         <label for="author">Автор</label>
                         <input type="text" class="form-control" id="author" name="author" placeholder="Штаффан Нёттеберг">
                     </div>
-                    <button type="submit" class="btn btn-primary">Искать</button>
+                    <div>
+                        <button type="submit" class="btn btn-primary">Искать</button>
+                        <a class="btn btn-primary" href="{{ url_for('books_page.books') }}" role="button">На полку</a>
+                    </div>
                 </form>
                 {% if books %}
-                    {% if not books %}
+                    {% if books[0] == None %}
                         <p style="margin-top: 10px;">По этому запросу ничего не нашлось</p>
                     {% else %}
                         <p style="margin-top: 10px;">Результатов: {{ books|length }}</p>

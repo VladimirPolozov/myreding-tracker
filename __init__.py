@@ -17,6 +17,7 @@ from blueprints.book import book_page
 from blueprints.my_book import my_book_page
 from blueprints.delete_book import delete_book_page
 from blueprints.api import api_blue
+from blueprints.not_found import not_found_page
 
 # Создание приложения
 app = Flask(__name__)
@@ -40,5 +41,6 @@ app.register_blueprint(book_page)
 app.register_blueprint(my_book_page)
 app.register_blueprint(delete_book_page)
 app.register_blueprint(api_blue)
+app.register_blueprint(not_found_page)
 # Ключ для взаимодействия с Google Api Books
 KEY = "key=AIzaSyDjcLFRSlro98kWymIkyX21yj8h4FGPFfc"
