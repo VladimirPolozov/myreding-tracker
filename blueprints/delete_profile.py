@@ -3,7 +3,7 @@ from flask import url_for, request, render_template
 from flask_login import current_user
 from werkzeug.utils import redirect
 from data import db_session
-from data.tables import User, Relationship
+from data.tables import User, Relationship, Statics
 
 delete_profile = flask.Blueprint('delete_profile', __name__,
                                  template_folder='templates')
@@ -25,7 +25,11 @@ def delete():
         # а если совпали
         session = db_session.create_session()
         # удаляем все связи этого пользователя с книгами
-        session.query(Relationship).filter(Relationship.user_id == current_user.id).delete()
+        session.query(Relationship).filter(
+            Relationship.user_id == current_user.id).delete()
+        # и его статистику
+        session.query(Statics).filter(
+            Statics.user_id == current_user.id).delete()
         # удаляем самого пользователя
         session.query(User).filter(User.id == current_user.id).delete()
         session.commit()
