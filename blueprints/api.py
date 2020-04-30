@@ -8,6 +8,9 @@ api_blue = flask.Blueprint('get_statics_blue', __name__,
 
 @api_blue.route('/api/<string:interval>')
 def get_statics(interval):
+    """Api для получение статистики на основание чтение пользователей
+       за все или определенны месяца"""
+    # если запрос не соответсвует
     if interval != 'all' and \
             int(interval) not in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]:
         return {'error': 'Not found'}
@@ -15,6 +18,7 @@ def get_statics(interval):
     statics = session.query(Statics).all()
     pages = 0
     time = 0
+    # высчитывание общего значения времени и страниц для всех пользователей
     for item in statics:
         if interval == '1' or interval == 'all':
             pages += int(item.january.split()[0])
@@ -53,6 +57,7 @@ def get_statics(interval):
             pages += int(item.december.split()[0])
             time += int(item.december.split()[1]) / 60
 
+    # приведение этого значения к среднему
     if interval == 'all':
         time = round(time / 12 / len(statics), 1)
         pages = round(pages / 12 / len(statics), 1)

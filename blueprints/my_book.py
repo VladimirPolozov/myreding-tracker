@@ -14,6 +14,7 @@ my_book_page = flask.Blueprint('my_book_page', __name__,
 
 @my_book_page.route('/mybook/<int:book_id>', methods=['POST', 'GET'])
 def my_book(book_id):
+    """Данные о книге, добавленной пользователем"""
     if not current_user.is_authenticated:  # если пользователь не авторизован
         return redirect(url_for('unauthorized_form.unauthorized'))
     elif request.method == "GET":
@@ -27,6 +28,8 @@ def my_book(book_id):
             book['id'] = str(book_id)
             book['pageCount'] = book_data.pages
             book['page_read'] = book_data.pages_read
+            # перевод времени из минут в чч:мм
+            # и вычисление скорости, если это возможно
             try:
                 hours = str(book_data.time // 60)
                 if len(hours) == 1:
@@ -37,20 +40,26 @@ def my_book(book_id):
                 book['time'] = hours + ':' + minute
                 book['speed'] = book['page_read'] // (book_data.time / 60)
                 book['percent'] = book['page_read'] // (book['pageCount'] / 100)
+            #  противном случае принимаем все значения за ноль
             except Exception:
                 book['page_read'] = 0
                 book['time'] = "00:00"
                 book['speed'] = 0
                 book['percent'] = 0
 
+            # если пользователь прочитал книгу
             if book['percent'] == 100:
                 book['status'] = 'Прочитал!'
+            # начал читать
             elif book['page_read'] > 0:
                 book['status'] = 'Читаю'
+            # не начал
             else:
                 book['status'] = 'Хочу прочитать'
 
+            # находим книгу в таблице книг по её id
             book_data = session.query(Book).filter(Book.id == book_id).first()
+            # запрос в Google Api Books
             response = requests.get(book_data.link).json()
 
             try:
@@ -86,10 +95,11 @@ def my_book(book_id):
             book['webReaderLink'] = response['accessInfo']['webReaderLink']
 
             return render_template('my_book.html', book=book)
-        except Exception as e:
+        except Exception as e:  # если что-то идёт не так
             print(e)
             abort(404)
 
+    # когда пользователь добавляет активность
     elif request.method == "POST":
         if request.form.get('time') == '00:00':
             return redirect(
@@ -97,10 +107,11 @@ def my_book(book_id):
                     'books_page.books',
                     message="Значение '00:00' у поля 'время' недопустимо"))
 
+        # добавляем полученные данные
+        # предварительно обработав их
         pages_read = request.form.get('pages_read')
         time = request.form.get('time').split(':')
         time = int(int(time[0]) * 60) + int(time[1])
-        print(pages_read, time)
 
         session = db_session.create_session()
         relation = session.query(Relationship).filter(
@@ -112,6 +123,7 @@ def my_book(book_id):
             str(datetime.now().year) + '-' + str(datetime.now().month)
         session.commit()
 
+        # добавляем статистику в соответствующий месяц
         sctatic = session.query(Statics).filter(
             Statics.user_id == current_user.id).first()
         if datetime.now().month == 1:

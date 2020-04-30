@@ -13,10 +13,12 @@ book_page = flask.Blueprint('book_page', __name__,
 
 @book_page.route('/book/<path:selfLink>', methods=['POST', 'GET'])
 def book(selfLink):
+    """Информация о книге ещё не добавленной в БД"""
     if not current_user.is_authenticated:  # если пользователь не авторизован
         return redirect(url_for('unauthorized_form.unauthorized'))
     elif request.method == "GET":
         try:
+            # запрос в Google Api Books
             response = requests.get(selfLink)
             response = response.json()
             book = {}
@@ -60,9 +62,9 @@ def book(selfLink):
         except Exception as e:
             print(e)
             abort(404)
-    elif request.method == 'POST':
+    elif request.method == 'POST':  # post запрос на добавление книги
         session = db_session.create_session()
-
+        # если книги нет в таблице с книгами
         book = session.query(Book).filter(Book.link == selfLink).first()
         if not book:
             book = Book()
@@ -70,6 +72,12 @@ def book(selfLink):
             session.add(book)
             session.commit()
 
+        relation = session.query(Relationship).filter(
+            Relationship.user_id == current_user.id,
+            Relationship.book_id == book.id).first()
+        if relation:  # если пользователь уже добавил эту книгу
+            abort(404)
+        # добавление книги в таблицу отношений пользователей и книги
         relation = Relationship()
         relation.user_id = current_user.id
         relation.book_id = book.id

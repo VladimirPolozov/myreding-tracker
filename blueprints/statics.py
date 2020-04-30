@@ -12,6 +12,7 @@ statics_page = flask.Blueprint('statics_page', __name__,
 
 @statics_page.route('/statics/<view>')
 def statics(view):
+    """Страница статистики"""
     if not current_user.is_authenticated:  # если пользователь не авторизован
         return redirect(url_for('unauthorized_form.unauthorized'))
     try:
@@ -21,6 +22,7 @@ def statics(view):
                   "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"]
         values = []
         legend = ''
+        # собираем данные о прочитанных пользователем страницах из БД
         if view == 'pages':
             legend = 'Страниц прочитано'
             session = db_session.create_session()
@@ -38,6 +40,7 @@ def statics(view):
             values.append(int(static.october.split()[0]))
             values.append(int(static.november.split()[0]))
             values.append(int(static.december.split()[0]))
+        # собираем данные о времени за чтением пользователя из БД
         elif view == 'time':
             legend = 'Минут за чтением'
             session = db_session.create_session()
@@ -55,6 +58,7 @@ def statics(view):
             values.append(int(static.october.split()[1]))
             values.append(int(static.november.split()[1]))
             values.append(int(static.december.split()[1]))
+        # вычисляем данные о скорости чтения пользователя
         elif view == 'speed':
             legend = 'Скорость стр/ч'
             session = db_session.create_session()

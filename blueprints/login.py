@@ -21,15 +21,19 @@ class LoginForm(FlaskForm):
 
 @login_form.route('/login', methods=['GET', 'POST'])
 def login():
+    """Авторизация пользователя"""
     if current_user.is_authenticated:  # если пользователь авторизован
         return redirect(url_for('profile_page.profile'))
     form = LoginForm()
     if form.validate_on_submit():
         session = db_session.create_session()
+        # получаем пользователя по имени
         user = session.query(User).filter(
             User.name == form.username.data).first()
+        # если пароли совпадают
         if user and user.check_password(form.password.data,
                                         form.username.data):
+            # Если пользователь нажал "запомнить меня"
             login_user(user, remember=form.remember_me.data)
             return redirect(url_for("profile_page.profile"))
         return render_template('login.html',

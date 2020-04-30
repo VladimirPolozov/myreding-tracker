@@ -11,6 +11,7 @@ delete_profile = flask.Blueprint('delete_profile', __name__,
 
 @delete_profile.route('/delete', methods=['GET', 'POST'])
 def delete():
+    """Удаление профиля"""
     if not current_user.is_authenticated:  # если пользователь не авторизован
         return redirect(url_for('unauthorized_form.unauthorized'))
     if request.method == "GET":

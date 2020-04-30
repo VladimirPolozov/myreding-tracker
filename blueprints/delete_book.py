@@ -11,6 +11,7 @@ delete_book_page = flask.Blueprint('delete_book_page', __name__,
 
 @delete_book_page.route('/delete_book/<path:book_id>', methods=['POST', 'GET'])
 def delete_book(book_id):
+    """Удаление книги"""
     if not current_user.is_authenticated:  # если пользователь не авторизован
         return redirect(url_for('unauthorized_form.unauthorized'))
     elif request.method == "GET":

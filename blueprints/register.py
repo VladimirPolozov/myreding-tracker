@@ -34,12 +34,14 @@ class RegistrationForm(FlaskForm):
 
 @registration_form.route('/register', methods=['GET', 'POST'])
 def register():
+    """Страница регистрации"""
     form = RegistrationForm()
     if current_user.is_authenticated:  # если пользователь авторизован
         return redirect(url_for('profile_page.profile'))
     if form.validate_on_submit():
         session = db_session.create_session()
 
+        # добавляем пользователя
         user = User()
         user.name = form.username.data
         if form.question.data[-1] != '?':
@@ -50,6 +52,7 @@ def register():
         session.add(user)
         session.commit()
 
+        # создаём в таблицу статистики его поле
         statics = Statics()
         statics.user_id = user.id
         session.add(statics)

@@ -9,6 +9,7 @@ blue_logout = flask.Blueprint('blue_logout', __name__,
 
 @blue_logout.route('/logout')
 def logout():
+    """Выход пользователя их системы"""
     if not current_user.is_authenticated:  # если пользователь не авторизован
         return redirect(url_for('unauthorized_form.unauthorized'))
     logout_user()
