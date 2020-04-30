@@ -14,13 +14,13 @@ books_page = flask.Blueprint('books_page', __name__,
     '/books/', defaults={'message': ''}, methods=['GET', 'POST'])
 @books_page.route('/books/<message>', methods=['GET', 'POST'])
 def books(message):
+    if not current_user.is_authenticated:  # если пользователь не авторизован
+        return redirect(url_for('unauthorized_form.unauthorized'))
     if message in ['Активность добавлена',
                    "Значение '00:00' у поля 'время' недопустимо"]:
         message = message
     else:
         message = ''
-    if not current_user.is_authenticated:  # если пользователь не авторизован
-        return redirect(url_for('unauthorized_form.unauthorized'))
     title = 'Полка'
     active = 'books'
     session = db_session.create_session()

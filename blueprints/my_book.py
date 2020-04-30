@@ -99,7 +99,8 @@ def my_book(book_id):
 
         pages_read = request.form.get('pages_read')
         time = request.form.get('time').split(':')
-        time = int(time[0] * 60) + int(time[1])
+        time = int(int(time[0]) * 60) + int(time[1])
+        print(pages_read, time)
 
         session = db_session.create_session()
         relation = session.query(Relationship).filter(
