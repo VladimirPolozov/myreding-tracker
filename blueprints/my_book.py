@@ -86,7 +86,8 @@ def my_book(book_id):
             book['webReaderLink'] = response['accessInfo']['webReaderLink']
 
             return render_template('my_book.html', book=book)
-        except Exception:
+        except Exception as e:
+            print(e)
             abort(404)
 
     elif request.method == "POST":
