@@ -48,7 +48,7 @@ def my_book(book_id):
                 book['percent'] = 0
 
             # если пользователь прочитал книгу
-            if book['percent'] == 100:
+            if book['page_read'] == book['pageCount']:
                 book['status'] = 'Прочитал!'
             # начал читать
             elif book['page_read'] > 0:
