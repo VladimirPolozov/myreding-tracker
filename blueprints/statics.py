@@ -25,7 +25,7 @@ def statics(view):
             legend = 'Страниц прочитано'
             session = db_session.create_session()
             static = session.query(Statics).filter(
-                Statics.user_id == current_user.id).one()
+                Statics.user_id == current_user.id).first()
             values.append(int(static.january.split()[0]))
             values.append(int(static.february.split()[0]))
             values.append(int(static.march.split()[0]))
@@ -42,7 +42,7 @@ def statics(view):
             legend = 'Минут за чтением'
             session = db_session.create_session()
             static = session.query(Statics).filter(
-            Statics.user_id == current_user.id).one()
+            Statics.user_id == current_user.id).first()
             values.append(int(static.january.split()[1]))
             values.append(int(static.february.split()[1]))
             values.append(int(static.march.split()[1]))
@@ -59,7 +59,7 @@ def statics(view):
             legend = 'Скорость стр/ч'
             session = db_session.create_session()
             static = session.query(Statics).filter(
-                Statics.user_id == current_user.id).one()
+                Statics.user_id == current_user.id).first()
             try:
                 values.append(
                     int(static.january.split()[0]) // (int(
@@ -140,7 +140,8 @@ def statics(view):
                                values=values,
                                labels=labels,
                                legend=legend)
-    except Exception:
+    except Exception as e:
+        print(e)
         abort(404)
 
 
